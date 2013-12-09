@@ -39,7 +39,7 @@ public class GUI extends JFrame implements ActionListener {
 		buttonPanel.setLayout(null);
 		//28, 89
 		playButton = new JButton(gameStart);
-		exitButton = new JButton(gameExit);
+		exitButton = new JButton(gameExit); 
 		
 		playButton.setBounds(GUIwidth/2 - ButtonWidth/2, 320, ButtonWidth, ButtonHeight);
 		exitButton.setBounds(GUIwidth/2 - ButtonWidth/2, 350, ButtonWidth, ButtonHeight);
