@@ -17,9 +17,7 @@ public class Ball extends GameObject {
 	private int v; // 湲곕낯 �띾룄
 	private int h; //  異⑸룎�꾩튂�먯꽌遺�꽣 �대룞���믪씠
 	private int a; // 媛�냽��	
-	private int count; // 踰쏀�湲댁닔(�곗냽�쇰줈 媛숈�踰쎌뿉 ��� 紐삵븯寃��꾪븿)
-	
-	private int radius;
+	private int count; // 踰쏀�湲댁닔(�곗냽�쇰줈 媛숈�踰쎌뿉 ��� 紐삵븯寃��꾪븿)
 	
 	public Ball() {
 		this(BASE_X, BASE_Y);
@@ -132,9 +130,6 @@ public class Ball extends GameObject {
 		
 	}
 	public int getRadius() {
-		return radius;
-	}
-	public void setRadius(int r) {
-		radius = r;
+		return width/2;
 	}
 }
