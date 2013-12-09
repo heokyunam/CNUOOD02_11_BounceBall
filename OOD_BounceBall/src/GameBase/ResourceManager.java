@@ -1,7 +1,6 @@
 package GameBase;
 
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import GameRes.GameObject;
@@ -17,6 +16,10 @@ public class ResourceManager {
 	public static ResourceManager getInstance() {
 		if(manager == null) manager = new ResourceManager();
 		return manager;
+	}
+	public void draw(Graphics g) {
+		for(int i = 0; i < objects.size(); i++)
+			objects.get(i).draw(g);
 	}
 
 	public void StageParsing(int STAGE) {
