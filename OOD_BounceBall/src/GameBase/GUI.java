@@ -17,11 +17,13 @@ public class GUI extends JFrame implements ActionListener {
 	private final String gameMode = "GAME";
 	
 	private final String gameStart = "Game Start";
-	private final String gameExit = "Game EXIT";
+	private final String gameExit = "Game Exit ";
 	private final String gameTitle = "BounceBall";
 	
 	private final int GUIwidth = 640;
 	private final int GUIheigth = 480;
+	private final int ButtonWidth = 100;
+	private final int ButtonHeight = 28;
 	
 	private static GUI gui;
 	private Canvas canvas;
@@ -38,9 +40,9 @@ public class GUI extends JFrame implements ActionListener {
 		//28, 89
 		playButton = new JButton(gameStart);
 		exitButton = new JButton(gameExit);
-		//89(踰꾪듉���� / 2 = 44
-		playButton.setBounds(GUIwidth/2 - 44, 320, 89, 28);
-		exitButton.setBounds(GUIwidth/2 - 44, 350, 89, 28);
+		
+		playButton.setBounds(GUIwidth/2 - ButtonWidth/2, 320, ButtonWidth, ButtonHeight);
+		exitButton.setBounds(GUIwidth/2 - ButtonWidth/2, 350, ButtonWidth, ButtonHeight);
 		
 		buttonPanel.add(playButton);
 		buttonPanel.add(exitButton);
@@ -67,15 +69,12 @@ public class GUI extends JFrame implements ActionListener {
 		System.out.println(playButton.getSize().height + " " + playButton.getSize().width);
 	}
 	/*
-	 * �앹꽦���ъ슜��KeyListener.getInstance()瑜��몄텧��
+	 * KeyListener.getInstance()
 	 */
 	public static GUI getInstance() {
 		if(gui == null) gui = new GUI();
 		return gui;
 	}
-	/*
-	 * getGraphics瑜��ъ슜�섎젮 �덉쑝��	 * JFrame�먯꽌 �ㅻⅨ �⑸룄濡�getGraphics瑜��ъ슜���ㅻ쪟媛��앷꺼��	 * �대윴�앹쑝濡�Graphics瑜�諛쏆븘�ㅼ씪�섎컰���녾쾶 �섏뿀��
-	 */
 	public Graphics getCanvasGraphics() {
 		return canvas.getGraphics();
 	}
