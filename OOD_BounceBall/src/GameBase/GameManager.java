@@ -1,5 +1,7 @@
 package GameBase;
 
+import javax.management.InstanceAlreadyExistsException;
+
 public class GameManager {
 
 	/*
@@ -8,20 +10,21 @@ public class GameManager {
 	// 상수 정의 공간
 	private final int STAGE_DEFAULT = 1;
 	// ------------------------
-	private static GameManager gameManager;
+
 	private GUI gui;
 	private KeyListener keyListener;
 	private GameThread gameThread = new GameThread();
-	private ResourceManager manager = ResourceManager.getInstance();
-	private int CurrStage;
-
+	private ResourceManager manager = new ResourceManager();
+	private static int CurrStage;
+	private static GameManager instance;
 	private GameManager() {
 
 	}
 
 	public static GameManager getInstance() {
-		if(gameManager == null) gameManager = new GameManager();
-		return gameManager;
+		if(instance == null)
+			return instance = new GameManager();
+		return instance;
 	}
 
 	public void start() {
@@ -29,19 +32,20 @@ public class GameManager {
 	}
 
 	private void init() { // 처음 한번 초기화용
-		gui = GUI.getInstance();
 		keyListener = KeyListener.getInstance();
 		CurrStage = STAGE_DEFAULT;
+		gui = GUI.getInstance();
 	}
 
 	private void StageParsing() {
 		manager.StageParsing(CurrStage);
-		CurrStage++;		
+		CurrStage++;
+		
 	}
 
 	public void GameRun() { // game start button click
 		// parsing
-
+		StageParsing();
 		// thread run
 		gameThread.ThreadStart();
 	}
