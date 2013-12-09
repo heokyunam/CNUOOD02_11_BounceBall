@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import GameRes.GameObject;
 
 public class ResourceManager {
-
+	private static ResourceManager manager;
 	private Parsing parsing;
 	private ArrayList<GameObject> objects;
 
-	public ResourceManager() {
-		// TODO Auto-generated constructor stub
+	private ResourceManager() {
+		
+	}
+	public static ResourceManager getInstance() {
+		if(manager == null) manager = new ResourceManager();
+		return manager;
 	}
 
 	public void StageParsing(int STAGE) {
