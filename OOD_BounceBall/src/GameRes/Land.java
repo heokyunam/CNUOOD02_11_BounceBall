@@ -6,8 +6,7 @@ public class Land extends GameObject{
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.drawRect(x, y, width, height);
 	}
 
 	@Override
