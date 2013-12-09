@@ -3,16 +3,16 @@ package GameBase;
 public class GameManager {
 
 	/*
-	 * game start Å¬¸¯½Ã ¿©±â¼­ ±×´ÙÀ½ºÎÅÍ ½ÇÇàµÊ
+	 * game start í´ë¦­ì‹œ ì—¬ê¸°ì„œ ê·¸ë‹¤ìŒë¶€í„° ì‹¤í–‰ë¨
 	 */
-	// »ó¼ö Á¤ÀÇ °ø°£
+	// ìƒìˆ˜ ì •ì˜ ê³µê°„
 	private final int STAGE_DEFAULT = 1;
 	// ------------------------
-
+	private static GameManager gameManager;
 	private GUI gui;
 	private KeyListener keyListener;
 	private GameThread gameThread = new GameThread();
-	private ResourceManager manager = new ResourceManager();
+	private ResourceManager manager = ResourceManager.getInstance();
 	private int CurrStage;
 
 	private GameManager() {
@@ -20,14 +20,15 @@ public class GameManager {
 	}
 
 	public static GameManager getInstance() {
-		return new GameManager();
+		if(gameManager == null) gameManager = new GameManager();
+		return gameManager;
 	}
 
 	public void start() {
 		init();
 	}
 
-	private void init() { // Ã³À½ ÇÑ¹ø ÃÊ±âÈ­¿ë
+	private void init() { // ì²˜ìŒ í•œë²ˆ ì´ˆê¸°í™”ìš©
 		gui = GUI.getInstance();
 		keyListener = KeyListener.getInstance();
 		CurrStage = STAGE_DEFAULT;
@@ -35,8 +36,7 @@ public class GameManager {
 
 	private void StageParsing() {
 		manager.StageParsing(CurrStage);
-		CurrStage++;
-		
+		CurrStage++;		
 	}
 
 	public void GameRun() { // game start button click
