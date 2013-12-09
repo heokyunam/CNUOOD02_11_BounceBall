@@ -3,10 +3,14 @@ package GameBase;
 public class GameThread extends Thread{
 	
 	private boolean mRun = false;
-	
+	private ResourceManager manager;
+	private GUI gui;
 	
 	public void ThreadStart(){
 		this.mRun = true;
+		this.manager = ResourceManager.getInstance();
+		this.gui = GUI.getInstance();
+		
 		this.start();
 	}
 	
@@ -19,6 +23,7 @@ public class GameThread extends Thread{
 		// TODO Auto-generated method stub
 		while(this.mRun){
 			System.out.println("Run!!");
+			manager.draw(gui.getCanvasGraphics());
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {
