@@ -11,9 +11,10 @@ public class ResourceManager {
 	private Parsing parsing;
 	private ArrayList<GameObject> objects;
 	private Ball ball;
+	private Collision collision;
 
 	private ResourceManager() {
-		
+		collision = Collision.getInstance();
 	}
 	public static ResourceManager getInstance() {
 		if(manager == null) manager = new ResourceManager();
@@ -26,8 +27,11 @@ public class ResourceManager {
 	}
 	public void update() {
 		ball.update();
+		ball.downUp();//¾ø¾Ö¾ßµÊ.
 	}
-
+	public void collision() {
+		collision.check(ball, objects);
+	}
 	public void StageParsing(int STAGE) {
 		try {
 			parsing = new Parsing(STAGE + ".hnl");

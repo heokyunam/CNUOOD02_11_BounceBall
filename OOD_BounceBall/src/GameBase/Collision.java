@@ -38,62 +38,66 @@ public class Collision {
 		else if(gameObj instanceof Needle)
 			return caseNeedle(ball, gameObj);
 		else if(gameObj instanceof Schanze)
-			return caseSchanze(ball, gameObj);
+			return caseRectangle(ball, gameObj);
 		else if(gameObj instanceof Portal)
 			return caseRectangle(ball, gameObj);
 		else
 			return false;		
 	}
 	private boolean caseRectangle(Ball ball, GameObject obj) {
-		if(isInArea(ball, obj, true)) {
-			if(ap(ball, false) == obj.getY()) {
-				Direction = direction.down;
-				return true;
+		int ballCenterX = ball.getX() + ball.getWidth()/2;
+		int ballCenterY = ball.getY() + ball.getHeight()/2;
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		int case1 = obj.getHeight() / obj.getWidth() * (ball.getX() - objCenterX) + objCenterY;
+		int case2 = -obj.getHeight() / obj.getWidth() * (ball.getX() - objCenterX) + objCenterY;
+		
+		if(ball.getY() > case1){
+			if(ball.getY() > case2){//up;
+				if(ball.getRadius() > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius() > Math.abs(ballCenterY-objCenterY)){
+						ball.up();
+						return true;
+					}
 			}
-			if(ball.getY() == ap(obj, false)) {
-				Direction = direction.up;
-				return true;
+			else{//left
+				if(ball.getRadius() > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius() > Math.abs(ballCenterY-objCenterY)){
+						ball.left();
+						return true;
+					}
 			}
 		}
-		if(isInArea(ball, obj, false)) {
-			if(ap(ball, true) == obj.getX()) {
-				Direction = direction.right;
-				return true;
+		else{
+			if(ball.getY() > case2){//right
+				if(ball.getRadius() > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius() > Math.abs(ballCenterY-objCenterY)){
+						ball.up();
+						return true;
+					}
 			}
-			if(ball.getX() == ap(obj, true)) {
-				Direction = direction.left;
-				return true;
+			else{//down
+				if(ball.getRadius() > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius() > Math.abs(ballCenterY-objCenterY)){
+						ball.down();
+						return true;
+					}
 			}
 		}
+		ball.nothing();
 		return false;
 	}
 	//obj1��obj2��踰붿쐞���랁븯�붿�
-	private boolean isInArea(GameObject obj1, GameObject obj2, boolean isX) {
-		if(isX) {
-			if(obj2.getX() <= obj1.getX() && ap(obj1, true) <= ap(obj2, true)) {
-				return true;
-			}
-			else return false;
-		}
-		else {
-			if(obj2.getY() <= obj1.getY() && ap(obj1, false) <= ap(obj2, false)) {
-				return true;
-			}
-			else return false;
-		}
-	}
-	private int ap(GameObject obj, boolean isX) {
-		if(isX) {
-			return obj.getX() + obj.getWidth();
-		}
-		else {
-			return obj.getY() + obj.getHeight();
-		}
-	}
-	private boolean caseSchanze(Ball ball, GameObject obj) {
-		return false;
-	}
+	
 	private boolean caseNeedle(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getWidth()/2;
+		int ballCenterY = ball.getY() + ball.getHeight()/2;
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		
+		if(ball.getRadius() > Math.abs(ballCenterX - objCenterX))
+			if(ball.getRadius() > Math.abs(Math.abs(ballCenterY - objCenterY) - Math.abs(ballCenterX - objCenterX)))
+				return true;
 		return false;
 	}
 }

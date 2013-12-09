@@ -2,7 +2,7 @@ package GameBase;
 
 public class GameThread extends Thread{
 	
-	private final int FRAME_TIME = 33;
+	private final int FRAME_TIME = 15;
 	private boolean mRun = false;
 	private ResourceManager rm;
 	private GUI gui;
@@ -26,9 +26,11 @@ public class GameThread extends Thread{
 		// TODO Auto-generated method stub
 		while(this.mRun){
 			startTime = System.currentTimeMillis();
-
+			
+			gui.clear();
 			rm.draw(gui.getCanvasGraphics());
 			rm.update();
+			rm.collision();
 			
 			endTime = System.currentTimeMillis();
 			toSleep = FRAME_TIME - (endTime - startTime);

@@ -36,13 +36,13 @@ public class Ball extends GameObject {
 		return ball;
 	}
 	public void draw(Graphics g) {
-		System.out.println("ball draw");
+		//System.out.println("ball draw");
 		g.setColor(Color.gray);
 		g.fillOval(x, y, size, size);
 	}
 	
 	public void downUp() {
-	/*test*/
+	/*
 		if(y>330 && x<300) {
 			up();
 		}
@@ -58,17 +58,16 @@ public class Ball extends GameObject {
 		if(y<150){
 			down();
 		}
-		/*�ㅼ젣肄붾뱶*/
+		*/
 		nothing();	
 		x += force;
 		
 	}
 	public void setBallDirection(int force) {
 		this.force = force;
-		
 	}
 	public void update() {
-		System.out.println("ball update");
+		//System.out.println("ball update");
 		increaseTime();
 	}
 	

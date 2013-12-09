@@ -6,12 +6,16 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GUI extends JFrame implements ActionListener {
+import GameRes.Ball;
+
+public class GUI extends JFrame implements ActionListener ,KeyListener{
 
 	private final String menuMode = "MENU";
 	private final String gameMode = "GAME";
@@ -59,8 +63,9 @@ public class GUI extends JFrame implements ActionListener {
 		
 		cardLayout.show(this.getContentPane(), menuMode);
 		
-		KeyListener keylistener = KeyListener.getInstance();
-		this.addKeyListener(keylistener);		
+		//this.addKeyListener(keylistener);
+		canvas.addKeyListener(this);
+
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle(gameTitle);
@@ -79,14 +84,16 @@ public class GUI extends JFrame implements ActionListener {
 		return canvas.getGraphics();
 	}
 	public void clear() {
-		
+		this.paint(getCanvasGraphics());
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj == playButton) {
 			cardLayout.show(this.getContentPane(), gameMode);
+			
 			GameManager.getInstance().GameRun();
+			canvas.requestFocus();
 			
 		}
 		else if(obj == exitButton) {
@@ -96,5 +103,33 @@ public class GUI extends JFrame implements ActionListener {
 	}
 	public static void main(String[] args) {
 		GUI.getInstance();
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		int code = e.getKeyCode();
+		System.out.println(code);
+		if(code == KeyEvent.VK_LEFT) {
+			Ball ball = Ball.getInstance();
+			ball.setBallDirection(-1);
+		}
+		else if(code == KeyEvent.VK_RIGHT) {
+			Ball ball = Ball.getInstance();
+			ball.setBallDirection(1);
+		}
+		else if(code == KeyEvent.VK_ESCAPE) {
+			GUI gui = GUI.getInstance();
+			
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

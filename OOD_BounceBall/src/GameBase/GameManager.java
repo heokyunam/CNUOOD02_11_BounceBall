@@ -11,10 +11,10 @@ public class GameManager {
 	// ------------------------
 
 	private GUI gui;
-	private KeyListener keyListener;
+	private GameKeyListener keyListener;
 	private GameThread gameThread = new GameThread();
 	private ResourceManager manager = ResourceManager.getInstance();
-	private static int CurrStage;
+	private static int CurrStage = 1;
 	private static GameManager instance;
 	private GameManager() {
 
@@ -31,7 +31,7 @@ public class GameManager {
 	}
 
 	private void init() { // 泥섏쓬 �쒕쾲 珥덇린�붿슜
-		keyListener = KeyListener.getInstance();
+		keyListener = GameKeyListener.getInstance();
 		CurrStage = STAGE_DEFAULT;
 		gui = GUI.getInstance();
 	}

@@ -1,8 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/GameBase/Collision.java=UTF-8
 encoding//src/GameBase/GUI.java=UTF-8
+encoding//src/GameBase/GameKeyListener.java=UTF-8
 encoding//src/GameBase/GameManager.java=UTF-8
-encoding//src/GameBase/KeyListener.java=UTF-8
 encoding//src/GameBase/Parsing.java=UTF-8
 encoding//src/GameRes/Ball.java=UTF-8
 encoding//src/GameRes/GameObject.java=UTF-8
