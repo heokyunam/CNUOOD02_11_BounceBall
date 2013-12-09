@@ -2,15 +2,12 @@ package GameBase;
 
 public class GameThread extends Thread{
 	
+	private final int FRAME_TIME = 33;
 	private boolean mRun = false;
-	private ResourceManager manager;
-	private GUI gui;
+	
 	
 	public void ThreadStart(){
 		this.mRun = true;
-		this.manager = ResourceManager.getInstance();
-		this.gui = GUI.getInstance();
-		
 		this.start();
 	}
 	
@@ -20,17 +17,27 @@ public class GameThread extends Thread{
 	
 	@Override
 	public void run() {
+		long startTime, endTime, toSleep;
 		// TODO Auto-generated method stub
 		while(this.mRun){
+			startTime = System.currentTimeMillis();
 			System.out.println("Run!!");
-			manager.draw(gui.getCanvasGraphics());
-			try {
-				sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
+			
+			
+			endTime = System.currentTimeMillis();
+			toSleep = FRAME_TIME - (endTime - startTime);
+
+			if (toSleep > 0) {
+				try {
+					Thread.sleep(toSleep);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+		
 	}
 
 }
