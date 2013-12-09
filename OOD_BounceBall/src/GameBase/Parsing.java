@@ -12,16 +12,31 @@ import java.util.Scanner;
 //�덉쇅泥섎━���ъ떖�댁꽌 �ｌ뼱遊�//--------------------------------------------
 
 
+
+
+
+
+
+import javax.sound.sampled.Port;
+
 import GameRes.Ball;
+import GameRes.FadeWall;
 import GameRes.GameObject;
+import GameRes.Land;
+import GameRes.Needle;
+import GameRes.Portal;
+import GameRes.Schanze;
 
 public class Parsing {
 
 	// ******�대� �ъ슜 �곸닔媛�吏�젙*********
 	private final int ERROR = -1;
 	private final int BALL = 0;
-	private final int OBJECT1 = 1;
-	private final int OBJECT2 = 2;
+	private final int FADEWALL = 1;
+	private final int LAND = 2;
+	private final int NEEDLE = 3;
+	private final int PORTAL = 4;
+	private final int SCHANZE = 5;
 	// ****************************
 
 	private ArrayList<GameObject> objects;
@@ -62,10 +77,10 @@ public class Parsing {
 			int n; // NumOfObjects
 			switch (CharObjctType(readObjectName)) {
 
-			case OBJECT1: // 4媛쒖뵫 �쎌쓬
+			case FADEWALL: // 4媛쒖뵫 �쎌쓬
 				n = Integer.parseInt(this.FileRead());
 				for (int i = 0; i < n; i++) {
-					Ball tmp = new Ball(); //
+					FadeWall tmp = new FadeWall();
 					try {
 						tmp.setX(Integer.parseInt(FileRead()));
 						tmp.setY(Integer.parseInt(FileRead()));
@@ -80,20 +95,76 @@ public class Parsing {
 
 				}
 				break;
-
-			case OBJECT2: // 2媛쒖뵫 �쎌쓬
+			case LAND: // 4媛쒖뵫 �쎌쓬
 				n = Integer.parseInt(this.FileRead());
 				for (int i = 0; i < n; i++) {
+					Land tmp = new Land();
 					try {
-						Ball tmp = new Ball(); //
 						tmp.setX(Integer.parseInt(FileRead()));
 						tmp.setY(Integer.parseInt(FileRead()));
+						tmp.setWidth(Integer.parseInt(FileRead()));
+						tmp.setHeight(Integer.parseInt(FileRead()));
 						objects.add(tmp);
 					} catch (NumberFormatException e) {
 						// TODO: handle exception
 						System.out.println("[Error]Invalid Object Error");
 						throw e;
 					}
+
+				}
+				break;
+			case NEEDLE: // 4媛쒖뵫 �쎌쓬
+				n = Integer.parseInt(this.FileRead());
+				for (int i = 0; i < n; i++) {
+					Needle tmp = new Needle();
+					try {
+						tmp.setX(Integer.parseInt(FileRead()));
+						tmp.setY(Integer.parseInt(FileRead()));
+						tmp.setWidth(Integer.parseInt(FileRead()));
+						tmp.setHeight(Integer.parseInt(FileRead()));
+						objects.add(tmp);
+					} catch (NumberFormatException e) {
+						// TODO: handle exception
+						System.out.println("[Error]Invalid Object Error");
+						throw e;
+					}
+
+				}
+				break;
+			case PORTAL: // 4媛쒖뵫 �쎌쓬
+				n = Integer.parseInt(this.FileRead());
+				for (int i = 0; i < n; i++) {
+					Portal tmp = new Portal();
+					try {
+						tmp.setX(Integer.parseInt(FileRead()));
+						tmp.setY(Integer.parseInt(FileRead()));
+						tmp.setWidth(Integer.parseInt(FileRead()));
+						tmp.setHeight(Integer.parseInt(FileRead()));
+						objects.add(tmp);
+					} catch (NumberFormatException e) {
+						// TODO: handle exception
+						System.out.println("[Error]Invalid Object Error");
+						throw e;
+					}
+
+				}
+				break;
+			case SCHANZE: // 4媛쒖뵫 �쎌쓬
+				n = Integer.parseInt(this.FileRead());
+				for (int i = 0; i < n; i++) {
+					Schanze tmp = new Schanze();
+					try {
+						tmp.setX(Integer.parseInt(FileRead()));
+						tmp.setY(Integer.parseInt(FileRead()));
+						tmp.setWidth(Integer.parseInt(FileRead()));
+						tmp.setHeight(Integer.parseInt(FileRead()));
+						objects.add(tmp);
+					} catch (NumberFormatException e) {
+						// TODO: handle exception
+						System.out.println("[Error]Invalid Object Error");
+						throw e;
+					}
+
 				}
 				break;
 			case BALL: // ball data �쎌쓬
@@ -117,10 +188,16 @@ public class Parsing {
 
 	private int CharObjctType(String ObjectName) {
 		switch (ObjectName) {
-		case "TestObject":
-			return OBJECT1;
-		case "TestObject2":
-			return OBJECT2;
+		case "FadeWall":
+			return FADEWALL;
+		case "Land":
+			return LAND;
+		case "Needle":
+			return NEEDLE;
+		case "Portal":
+			return PORTAL;
+		case "Schanze":
+			return SCHANZE;
 		case "Ball":
 			return BALL;
 		default:
