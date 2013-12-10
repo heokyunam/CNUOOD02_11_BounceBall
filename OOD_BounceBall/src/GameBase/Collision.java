@@ -14,6 +14,7 @@ public class Collision {
 	private static Collision collision;
 	public enum direction {up, left, right, down, not}
 	private direction Direction = direction.not;
+	private boolean isFadeWall = false;
 	
 	public static Collision getInstance() {
 		if(collision == null) collision = new Collision();
@@ -35,6 +36,10 @@ public class Collision {
 		for(int i = 0; i < gameObjs.size(); i++){
 			if(isCollided(ball, gameObjs.get(i))){
 				gameObjs.get(i).collisionCheck(ball);
+				if(isFadeWall){
+					gameObjs.remove(i);
+					isFadeWall = false;
+				}
 				ball.nothing();
 				return;
 			}
@@ -44,19 +49,18 @@ public class Collision {
 	private boolean isCollided(Ball ball, GameObject gameObj) {
 		if(gameObj instanceof Land){
 			return caseRectangle(ball, gameObj);
-		}
-			
+		}			
 		else if(gameObj instanceof FadeWall){
-			return caseRectangle(ball, gameObj);
+			return caseFadeWall(ball, gameObj);
 		}
 		else if(gameObj instanceof Needle)
 			return caseNeedle(ball, gameObj);
 		else if(gameObj instanceof Schanze){
-
-			return caseRectangle(ball, gameObj);
+			return caseSchanze(ball, gameObj);
 		}
-		else if(gameObj instanceof Portal)
-			return caseRectangle(ball, gameObj);
+		else if(gameObj instanceof Portal){			
+			return casePortal(ball, gameObj);
+		}
 		else
 			return false;
 	}
@@ -103,7 +107,79 @@ public class Collision {
 		}
 		return false;
 	}
-	
+	private boolean caseFadeWall(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getRadius();
+		int ballCenterY = ball.getY() + ball.getRadius();
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		double case1 = (((double)obj.getHeight() / obj.getWidth()) * (ballCenterX - objCenterX))+ objCenterY;
+		double case2 = -(((double)obj.getHeight() / obj.getWidth()) * (ballCenterX - objCenterX))+ objCenterY;
+		
+		if(ballCenterY < case1){
+			if(ballCenterY < case2){//up;
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX)){					
+					if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+						ball.up();
+						isFadeWall = true;
+						return true;
+					}
+				}
+			}
+			else{//right
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2  > Math.abs(ballCenterY-objCenterY)){
+						ball.right();	
+						isFadeWall = true;
+						return true;
+					}
+			}
+		}
+		else{
+			if(ballCenterY < case2){//left
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2> Math.abs(ballCenterY-objCenterY)){		
+						ball.left();	
+						isFadeWall = true;
+						return true;
+					}
+			}
+			else{//down
+				if(ball.getRadius()+obj.getWidth()/2  > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+						ball.down();
+						isFadeWall = true;
+						return true;
+					}
+			}
+		}
+		return false;
+	}
+
+	private boolean  caseSchanze(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getRadius();
+		int ballCenterY = ball.getY() + ball.getRadius();
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		
+		if(ball.getRadius()+obj.getWidth()/2  > Math.abs(ballCenterX-objCenterX))
+			if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+				ball.jump();
+				return true;
+			}
+		return false;
+	}
+	private boolean  casePortal(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getRadius();
+		int ballCenterY = ball.getY() + ball.getRadius();
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		
+		if(ball.getRadius()+obj.getWidth()/2  > Math.abs(ballCenterX-objCenterX))
+			if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+				return true;
+			}
+		return false;
+	}
 	private boolean caseNeedle(Ball ball, GameObject obj) {
 		int ballCenterX = ball.getX() + ball.getRadius()/2;
 		int ballCenterY = ball.getY() + ball.getRadius()/2;
