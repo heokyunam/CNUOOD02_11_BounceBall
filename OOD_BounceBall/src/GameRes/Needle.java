@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 
+import GameBase.GameManager;
+
 public class Needle extends GameObject{
 	private final Color c = Color.red;
 	private Polygon p;
@@ -27,8 +29,8 @@ public class Needle extends GameObject{
 
 	@Override
 	public void collisionCheck(Ball ball) {
-		// TODO Auto-generated method stub
-		
+		GameManager gm = GameManager.getInstance();
+		gm.first();		
 	}
 
 }
