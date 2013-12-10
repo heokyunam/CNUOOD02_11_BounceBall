@@ -1,19 +1,22 @@
 package GameRes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
-public class Portal extends GameObject {
+import GameBase.GameManager;
 
+public class Portal extends GameObject {
+	private final Color c = Color.blue;
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.setColor(c);
+		g.fillRect(x, y, width, height);
 	}
 
 	@Override
 	public void collisionCheck(Ball ball) {
-		// TODO Auto-generated method stub
-		
+		GameManager g = GameManager.getInstance();
+		g.next();		
 	}
 
 }
