@@ -1,0 +1,118 @@
+package GameBase;
+
+import java.util.ArrayList;
+
+import GameRes.Ball;
+import GameRes.FadeWall;
+import GameRes.GameObject;
+import GameRes.Land;
+import GameRes.Needle;
+import GameRes.Portal;
+import GameRes.Schanze;
+
+public class Collision {
+	private static Collision collision;
+	public enum direction {up, left, right, down, not}
+	private direction Direction = direction.not;
+	
+	public static Collision getInstance() {
+		if(collision == null) collision = new Collision();
+		return collision;
+	}
+	public direction getCollisionDirection() {
+		return Direction;
+	}
+	public void check(Ball ball, GameObject[] gameObjs) {
+		for(int i = 0; i < gameObjs.length; i++){
+			if(isCollided(ball, gameObjs[i])){
+				gameObjs[i].collisionCheck(ball);
+				return;
+			}
+		}
+		ball.nothing();
+	}
+	public void check(Ball ball, ArrayList<GameObject> gameObjs) {
+		for(int i = 0; i < gameObjs.size(); i++){
+			if(isCollided(ball, gameObjs.get(i))){
+				gameObjs.get(i).collisionCheck(ball);
+				ball.nothing();
+				return;
+			}
+		}
+		ball.nothing();
+	}
+	private boolean isCollided(Ball ball, GameObject gameObj) {
+		if(gameObj instanceof Land){
+			return caseRectangle(ball, gameObj);
+		}
+			
+		else if(gameObj instanceof FadeWall){
+			return caseRectangle(ball, gameObj);
+		}
+		else if(gameObj instanceof Needle)
+			return caseNeedle(ball, gameObj);
+		else if(gameObj instanceof Schanze){
+
+			return caseRectangle(ball, gameObj);
+		}
+		else if(gameObj instanceof Portal)
+			return caseRectangle(ball, gameObj);
+		else
+			return false;
+	}
+	private boolean caseRectangle(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getRadius();
+		int ballCenterY = ball.getY() + ball.getRadius();
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		double case1 = (((double)obj.getHeight() / obj.getWidth()) * (ballCenterX - objCenterX))+ objCenterY;
+		double case2 = -(((double)obj.getHeight() / obj.getWidth()) * (ballCenterX - objCenterX))+ objCenterY;
+		
+		if(ballCenterY < case1){
+			if(ballCenterY < case2){//up;
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX)){					
+					if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+						ball.up();
+						return true;
+					}
+				}
+			}
+			else{//right
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2  > Math.abs(ballCenterY-objCenterY)){
+						ball.right();	
+						return true;
+					}
+			}
+		}
+		else{
+			if(ballCenterY < case2){//left
+				if(ball.getRadius()+obj.getWidth()/2 > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2> Math.abs(ballCenterY-objCenterY)){		
+						ball.left();						
+						return true;
+					}
+			}
+			else{//down
+				if(ball.getRadius()+obj.getWidth()/2  > Math.abs(ballCenterX-objCenterX))
+					if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+						ball.down();
+						return true;
+					}
+			}
+		}
+		return false;
+	}
+	
+	private boolean caseNeedle(Ball ball, GameObject obj) {
+		int ballCenterX = ball.getX() + ball.getRadius()/2;
+		int ballCenterY = ball.getY() + ball.getRadius()/2;
+		int objCenterX = obj.getX() + obj.getWidth()/2;
+		int objCenterY = obj.getY() + obj.getHeight()/2;
+		
+		if(ball.getRadius() > Math.abs(ballCenterX - objCenterX))
+			if(ball.getRadius() > Math.abs(Math.abs(ballCenterY - objCenterY) - Math.abs(ballCenterX - objCenterX)))
+				return true;
+		return false;
+	}
+}
