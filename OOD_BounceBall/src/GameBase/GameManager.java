@@ -29,22 +29,23 @@ public class GameManager {
 	public void start() {
 		init();
 	}
-
-	private void init() { // 泥섏쓬 �쒕쾲 珥덇린�붿슜
+	private void init() { // 泥섏쓬 �쒕쾲 珥덇린�붿슜
 		keyListener = GameKeyListener.getInstance();
 		CurrStage = STAGE_DEFAULT;
 		gui = GUI.getInstance();
 	}
-
-	private void StageParsing() {
+	public void first() {
+		CurrStage = 1;
 		manager.StageParsing(CurrStage);
+	}
+	public void next() {
 		CurrStage++;
-		
+		manager.StageParsing(CurrStage);
 	}
 
 	public void GameRun() { // game start button click
 		// parsing
-		StageParsing();
+		first();
 		// thread run
 		gameThread.ThreadStart();
 	}
