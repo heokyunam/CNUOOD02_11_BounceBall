@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Ball extends GameObject {
-	private static final int upDeadLine = 80;
-	private static final int downDeadLine = 320;
+	private static final int A = -6;
+	private static final int V= 40;
 	private static Ball ball;
 	private static int BASE_X = 50, BASE_Y = 200;
+	
 	
 	private final int size = 10;	
 	private double  time; // �쒓컙
@@ -23,9 +24,9 @@ public class Ball extends GameObject {
 	
 	private Ball(int x, int y) {
 		this.time=6;
-		v = 50;
+		v =V;
 		h=340;
-		a = -7; 
+		a = A; 
 		count = 0;
 		force=0;
 	}
@@ -62,11 +63,11 @@ public class Ball extends GameObject {
 		y = h - (int)((v*time) + (a*time*time));
 	}
 	
-	public void up(){		
+	public void up(){
 		this.h = y-size;
 		zeroTime();
 		count = 0;
-		v = 40;
+		v = V;
 	}
 	
 	public void down(){
@@ -78,7 +79,8 @@ public class Ball extends GameObject {
 	public void left(){
 		if(count != 1){
 		this.h = y;
-		if( time > (double)v/(-2.0*a) ) v = -40;// �대젮媛덈븣 踰쎌젏��寃쎌슦
+		if( time > (double)v/(-2.0*a) ) v = -V;
+		else v = V;
 		x -= 2;
 		zeroTime();
 		count = 1;
@@ -91,7 +93,8 @@ public class Ball extends GameObject {
 	public void right() {
 		if(count != -1){
 			this.h = y;
-			if( time > (double)v/(-2.0*a) ) v = -40;
+			if( time > (double)v/(-2.0*a) ) v = -V;
+			else v = V;
 			x += 2;
 			zeroTime();
 			count = -1;
@@ -103,9 +106,10 @@ public class Ball extends GameObject {
 	}
 	public void jump(){
 		this.h = y;
+		this.h = y-size;
 		zeroTime();
 		count = 0;
-		v = 80;
+		v = V*3/2;
 	}
 	
 	@Override
