@@ -181,14 +181,33 @@ public class Collision {
 		return false;
 	}
 	private boolean caseNeedle(Ball ball, GameObject obj) {
-		int ballCenterX = ball.getX() + ball.getRadius()/2;
-		int ballCenterY = ball.getY() + ball.getRadius()/2;
+		int ballCenterX = ball.getX() + ball.getRadius();
+		int ballCenterY = ball.getY() + ball.getRadius();
 		int objCenterX = obj.getX() + obj.getWidth()/2;
 		int objCenterY = obj.getY() + obj.getHeight()/2;
 		
-		if(ball.getRadius() > Math.abs(ballCenterX - objCenterX))
-			if(ball.getRadius() > Math.abs(Math.abs(ballCenterY - objCenterY) - Math.abs(ballCenterX - objCenterX)))
-				return true;
+		double HdivideW = ((double)obj.getWidth()/2)/(double)obj.getHeight();
+		double distance = HdivideW*ball.getRadius()*Math.sqrt(HdivideW*HdivideW+1);
+		
+		int point1X = obj.getX() + obj.getWidth()/2;
+		int point1Y = obj.getY();		
+		int point2X = obj.getX();
+		int point2Y = obj.getY() + obj.getHeight();
+		int point3X = obj.getX()+obj.getWidth();
+		int point3Y = obj.getY() + obj.getHeight();
+		
+		double slope1 = (double)(point1Y -  point2Y)/(point1X - point2X);
+		double slope2 = (double)(point2Y -  point3Y)/(point2X - point3X);
+		double slope3 = (double)(point1Y -  point3Y)/(point1X - point3X);
+		
+		double case1 = slope1*(ballCenterX-point1X) - distance + point1Y - ball.getRadius() ;
+		double case2 = slope2*(ballCenterX-point2X) + ball.getRadius()+ point2Y;
+		double case3 = slope3*(ballCenterX-point3X) - distance + point3Y - ball.getRadius();
+		
+	
+		if(ballCenterY>case1 && ballCenterY>case3 && ballCenterY<case2)
+				return true;	
+		
 		return false;
 	}
 }
