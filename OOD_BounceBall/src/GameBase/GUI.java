@@ -116,9 +116,9 @@ public class GUI extends JFrame implements ActionListener ,KeyListener{
 			Ball ball = Ball.getInstance();
 			ball.setBallDirection(1);
 		}
-		else if(code == KeyEvent.VK_ESCAPE) {
-			GUI gui = GUI.getInstance();
-			
+		else if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_R) {
+			GameManager gm = GameManager.getInstance();
+			gm.first();
 		}
 	}
 	@Override
