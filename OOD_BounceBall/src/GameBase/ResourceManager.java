@@ -25,6 +25,10 @@ public class ResourceManager {
 		for(int i = 0; i < objects.size(); i++)
 			objects.get(i).draw(g);
 	}
+	public void clear() {
+		Graphics g = GUI.getInstance().getCanvasGraphics();
+		g.clearRect(0, 0, 640, 480);
+	}
 	public void update() {
 		ball.update();
 	}
