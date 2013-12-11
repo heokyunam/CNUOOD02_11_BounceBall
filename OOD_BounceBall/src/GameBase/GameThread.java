@@ -32,7 +32,7 @@ public class GameThread extends Thread{
 			
 			startTime = System.currentTimeMillis();
 			
-			gui.clear();
+			rm.clear();
 			rm.draw(gui.getCanvasGraphics());
 			rm.collision();
 			rm.update();
