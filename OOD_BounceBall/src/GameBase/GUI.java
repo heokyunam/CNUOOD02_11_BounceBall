@@ -2,8 +2,11 @@ package GameBase;
 
 import java.awt.Canvas;
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -37,10 +40,20 @@ public class GUI extends JFrame implements ActionListener ,KeyListener{
 	private JPanel buttonPanel;
 	
 	private Image forgroundImage;
-	
+	private Font font;
 	private GUI() {
 		cardLayout = new CardLayout();
-		buttonPanel = new JPanel();
+		loadImage();
+		font = new Font("Batang", Font.BOLD, 30);
+		buttonPanel = new JPanel() {
+			public void paintComponent(Graphics g) {
+				g.drawImage(forgroundImage, 0, 0, null);
+				g.drawString("BounceBall", 225, 100);
+				super.paintComponents(g);
+			}
+		};
+		setResizable(false);
+		buttonPanel.setFont(font);
 		
 		buttonPanel.setLayout(null);
 		//28, 89
@@ -68,12 +81,13 @@ public class GUI extends JFrame implements ActionListener ,KeyListener{
 		//this.addKeyListener(keylistener);
 		canvas.addKeyListener(this);
 
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle(gameTitle);
 		this.setSize(GUIwidth, GUIheigth);
 		this.setVisible(true);
 		System.out.println(playButton.getSize().height + " " + playButton.getSize().width);
+		
 	}
 	/*
 	 * KeyListener.getInstance()
@@ -83,11 +97,17 @@ public class GUI extends JFrame implements ActionListener ,KeyListener{
 		return gui;
 	}
 	public void loadImage() {
-		
-	}
-	public void paint(Graphics g) {
-		
-		super.paint(g);
+		if(this.forgroundImage == null) {
+			MediaTracker tracker = new MediaTracker(this);
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			this.forgroundImage = toolkit.getImage("picture.jpg");
+			tracker.addImage(this.forgroundImage, 0);
+			try {
+				tracker.waitForAll();
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	public Graphics getCanvasGraphics() {
 		return canvas.getGraphics();
