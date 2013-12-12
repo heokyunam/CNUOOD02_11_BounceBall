@@ -32,11 +32,15 @@ public class GameManager {
 	}
 	public void first() {
 		CurrStage = 1;
+		manager.allClear();
 		manager.StageParsing(CurrStage);
+		manager.allClear();
 	}
 	public void next() {
 		CurrStage++;
+		manager.allClear();
 		manager.StageParsing(CurrStage);
+		manager.allClear();
 	}
 
 	public void GameRun() { // game start button click

@@ -37,6 +37,7 @@ public class Collision {
                         if(isCollided(ball, gameObjs.get(i))){
                                 gameObjs.get(i).collisionCheck(ball);
                                 if(isFadeWall){
+                                    	ResourceManager.getInstance().clear(gameObjs.get(i));
                                         gameObjs.remove(i);
                                         isFadeWall = false;
                                 }

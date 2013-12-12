@@ -2,24 +2,19 @@ package GameRes;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
 
 public class Schanze extends GameObject{
-	private Polygon p;
-	private final Color c = Color.black;
-	@Override
-	public void draw(Graphics g) {
-		if(p == null) {
-			p.addPoint(x, y);
-			p.addPoint(x + width, y);
-		}
-		g.setColor(c);
-		g.drawPolygon(p);
-	}
+        private Color color = Color.blue;
+        @Override
+        public void draw(Graphics g) {
+                g.setColor(color);
+                g.drawLine(x,y,x+width,y);
+        }
 
-	@Override
-	public void collisionCheck(Ball ball) {
-		
-	}
+        @Override
+        public void collisionCheck(Ball ball) {
+                // TODO Auto-generated method stub
+                
+        }
 
 }

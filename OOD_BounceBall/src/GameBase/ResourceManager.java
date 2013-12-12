@@ -31,6 +31,19 @@ public class ResourceManager {
 	public void collision() {
 		collision.check(ball, objects);
 	}
+	public void clear() {
+		Graphics g = GUI.getInstance().getCanvasGraphics();
+		g.clearRect(ball.getX()-5, ball.getY()-5, ball.getRadius() * 2 + 10, ball.getRadius() * 2 + 10);
+	}
+	public void clear(GameObject obj) {
+		Graphics g = GUI.getInstance().getCanvasGraphics();
+		g.clearRect(obj.getX(), obj.getY(), obj.getWidth(), obj.getHeight());		
+	}
+	public void allClear() {
+		Graphics g = GUI.getInstance().getCanvasGraphics();
+		g.clearRect(0, 0, 640, 480);	
+		
+	}
 	public void StageParsing(int STAGE) {
 		try {
 			parsing = new Parsing(STAGE + ".hnl");

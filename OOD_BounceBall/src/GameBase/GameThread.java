@@ -31,11 +31,11 @@ public class GameThread extends Thread{
 		while(this.mRun){
 			
 			startTime = System.currentTimeMillis();
-			
-			gui.clear();
-			rm.draw(gui.getCanvasGraphics());
+
+			rm.clear();
 			rm.collision();
 			rm.update();
+			rm.draw(gui.getCanvasGraphics());
 			
 			
 			endTime = System.currentTimeMillis();
