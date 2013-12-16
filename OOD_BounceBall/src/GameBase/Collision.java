@@ -187,9 +187,10 @@ public class Collision {
                 int objCenterX = obj.getX() + obj.getWidth()/2;
                 int objCenterY = obj.getY() + obj.getHeight()/2;
                 
-                if(ball.getRadius() > Math.abs(ballCenterX - objCenterX))
-                        if(ball.getRadius() > Math.abs(Math.abs(ballCenterY - objCenterY) - Math.abs(ballCenterX - objCenterX)))
-                                return true;
+                if(ball.getRadius()+obj.getWidth()/2  > Math.abs(ballCenterX-objCenterX))
+			if(ball.getRadius()+ obj.getHeight()/2 > Math.abs(ballCenterY-objCenterY)){
+				if(ballCenterY>case1 && ballCenterY>case3 && ballCenterY<case2)
+					return true;
                 return false;
         }
 }
