@@ -43,11 +43,10 @@ public class Ball extends GameObject {
         
         public void setBallDirection(int force) {
                 this.force = force;
-                x += force;
         }
         
         public void update() {                
-                setBallDirection(force);
+        		x += force;
                 increaseTime();
         }
         
